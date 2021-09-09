@@ -1,5 +1,25 @@
 from selenium import webdriver
 import time
+import urllib.request
+from PIL import Image
+
+NAME = "Lays_Magic_Masala"
+
+def download_images(urls):
+    path = "data/"
+    ctr=0
+    for url in urls:
+        print(url)
+        try:
+            name = path+NAME+str(ctr)+".jpeg"
+            urllib.request.urlretrieve(url, name)
+            img = Image.open(name)
+            img.show()
+
+        except:
+            print("can't fetch that url sorry")
+            continue
+        ctr+=1
 
 def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_between_interactions:int=1):
     def scroll_to_end(wd):
@@ -65,3 +85,4 @@ if __name__ == "__main__":
 
     urls = fetch_image_urls("Nanami Kento", 10, wd, 1) 
     print(urls)
+    download_images(urls)
