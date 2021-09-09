@@ -1,4 +1,4 @@
-from selenium import webdriver 
+from selenium import webdriver
 import time
 import urllib.request
 from PIL import Image
@@ -24,8 +24,8 @@ def download_images(urls):
 def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_between_interactions:int=1):
     def scroll_to_end(wd):
         wd.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(sleep_between_interactions)    
-    
+        time.sleep(sleep_between_interactions)
+
     # build the google query
     search_url = "https://www.google.com/search?safe=off&site=&tbm=isch&source=hp&q={q}&oq={q}&gs_l=img"
     print(search_url.format(q=query))
@@ -41,9 +41,9 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
         # get all image thumbnail results
         thumbnail_results = wd.find_elements_by_css_selector("img.Q4LuWd")
         number_results = len(thumbnail_results)
-        
+
         print(f"Found: {number_results} search results. Extracting links from {results_start}:{number_results}")
-        
+
         for img in thumbnail_results[results_start:number_results]:
             # try to click every thumbnail such that we can get the real image behind it
             try:
@@ -52,7 +52,7 @@ def fetch_image_urls(query:str, max_links_to_fetch:int, wd:webdriver, sleep_betw
             except Exception:
                 continue
 
-            # extract image urls    
+            # extract image urls
             actual_images = wd.find_elements_by_css_selector('img.n3VNCb')
             for actual_image in actual_images:
                 if actual_image.get_attribute('src') and 'http' in actual_image.get_attribute('src'):
@@ -83,6 +83,6 @@ if __name__ == "__main__":
     wd = webdriver.Chrome(executable_path=DRIVER_PATH)
 
 
-    urls = fetch_image_urls("Lays hot and sweet flavour", 10, wd, 1) 
+    urls = fetch_image_urls("Lays hot and sweet flavour", 20, wd, 1)
     print(urls)
     download_images(urls)
