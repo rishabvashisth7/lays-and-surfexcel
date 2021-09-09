@@ -3,7 +3,7 @@ import time
 import urllib.request
 from PIL import Image
 
-NAME = "Lays_hot_and_sweet"
+NAME = "Lays_magic_masala"
 
 def download_images(urls):
     path = "data/"
@@ -83,6 +83,6 @@ if __name__ == "__main__":
     wd = webdriver.Chrome(executable_path=DRIVER_PATH)
 
 
-    urls = fetch_image_urls("Lays hot and sweet flavour", 20, wd, 1)
+    urls = fetch_image_urls("Lays Indian magic masala", 20, wd, 1)
     print(urls)
     download_images(urls)
